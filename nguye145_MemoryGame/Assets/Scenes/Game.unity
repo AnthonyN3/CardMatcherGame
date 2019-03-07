@@ -243,13 +243,13 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 10, y: 10}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 1
+  m_ConstraintCount: 5
 --- !u!114 &241241784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,8 +299,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb8f03a7aef8cc41a2cac02c44081d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: {fileID: 7127733080010599597, guid: 26252d897e992ee4a828e9ce327e05bb, type: 3}
-  numOfCards: 20
+  cards: {fileID: 3653751946575464012, guid: c15b1a4889582a741b0c9d82e7ad1f45, type: 3}
+  Images:
+  - {fileID: 21300000, guid: a0fcfda5ee4ad4746aa419ae2551f183, type: 3}
+  - {fileID: 21300000, guid: eab1eca6dcc317c4aa47089c4b869ab5, type: 3}
+  - {fileID: 21300000, guid: 581c4b6951e14ba44b05c0c82a2c64c8, type: 3}
+  - {fileID: 21300000, guid: aa0841a545a0bdc4ca5ec45cfd0d90b7, type: 3}
+  - {fileID: 21300000, guid: 2223d4ec604a56348938893dff23f33c, type: 3}
+  - {fileID: 21300000, guid: 20e7eccd01e754d4080a373256f39df8, type: 3}
+  - {fileID: 21300000, guid: 1db5670ed090ca344b56346cfa147758, type: 3}
+  - {fileID: 21300000, guid: fe8fe13532633bf4ba85ab2dab664e3d, type: 3}
+  - {fileID: 21300000, guid: e25fbf4d9dd09074db2ced932a9f3bf4, type: 3}
+  - {fileID: 21300000, guid: 570a8df092d65644db54a180da6a0aea, type: 3}
 --- !u!1 &531465311
 GameObject:
   m_ObjectHideFlags: 0
