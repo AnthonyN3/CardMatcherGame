@@ -23,4 +23,10 @@ public class MainMenu : MonoBehaviour
         Debug.Log(PlayerData.numOfCards);
     }
 
+    public void Menu()
+    {
+        //Loads the Main menu scene
+        SceneManager.LoadScene("Menu");
+    }
+
 }
