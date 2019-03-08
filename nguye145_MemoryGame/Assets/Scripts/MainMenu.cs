@@ -20,7 +20,6 @@ public class MainMenu : MonoBehaviour
     public void UniqueCards(int input)
     {
         PlayerData.numOfCards = input;
-        Debug.Log(PlayerData.numOfCards);
     }
 
     public void Menu()
