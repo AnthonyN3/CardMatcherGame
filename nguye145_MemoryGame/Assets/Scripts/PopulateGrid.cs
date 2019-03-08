@@ -21,6 +21,8 @@ public class PopulateGrid : MonoBehaviour
     public bool isPressed = true;
     private int cardsMatched;
 
+    private int rows;
+    private int cols = 3;
 
     //SCORE
     public TextMeshProUGUI scoreText;
@@ -29,10 +31,17 @@ public class PopulateGrid : MonoBehaviour
     //public Stopwatch timer;
     Stopwatch timer;
 
+
     // Start is called before the first frame update
     void Start()
     {
         cardsMatched = 0;
+        isPressed = true;
+
+        //Start timer
+        timer = new Stopwatch();
+        timer.Start();
+    
 
         //Finds the gameobbject named "Score"
         GameObject scoreGO = GameObject.Find("Score");
@@ -40,11 +49,23 @@ public class PopulateGrid : MonoBehaviour
         score = 1000;
         scoreText.text = score.ToString();  //Sets the text score to 1000 (Default)
         
-        isPressed = true;
+       /*  cols=3;
+        if(PlayerData.numOfCards == 6)
+            rows = 4;
+        else if(PlayerData.numOfCards == 7)
+            rows = 5;
+        else if (PlayerData.numOfCards == 8 || PlayerData.numOfCards == 9)
+            rows = 6;
+        else
+            rows = 7;
+        
+        RectTransform parentRect = gameObject.GetComponent<RectTransform>();
+        GridLayoutGroup grid = gameObject.GetComponent<GridLayoutGroup>();
+        grid.cellSize = new Vector2(parentRect.rect.width/cols, parentRect.rect.height/rows);*/
+
+
         populate(); //Populates the grid/screen with cards
 
-        timer = new Stopwatch();
-        timer.Start();
     }
 
     public void populate()
