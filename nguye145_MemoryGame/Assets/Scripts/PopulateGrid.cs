@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;   //For Unity UI (Canvas, buttons, texts, etc)    
 using TMPro;            //For TextMeshPro 
 using System.Diagnostics;
-
+using UnityEngine.SceneManagement;
 
 public class PopulateGrid : MonoBehaviour
 {
@@ -150,14 +150,16 @@ public class PopulateGrid : MonoBehaviour
             CardTwo = null;
 
             cardsMatched++;
+
+            //Checks if you have won(matched all cards)
             if(cardsMatched == PlayerData.numOfCards)
             {
                 //Stop timer and store into a static variable from a static script/class
                 timer.Stop();
                 PlayerData.gameTime = (timer.ElapsedMilliseconds/1000f);
-
+                PlayerData.gameScore = score;
                 
-                //YOU WIN
+                SceneManager.LoadScene("WinLose");
             }
         }
         else        //If mis matched cards...
@@ -186,9 +188,9 @@ public class PopulateGrid : MonoBehaviour
             //Stop timer and store into a static variable from a static script/class
             timer.Stop();
             PlayerData.gameTime = (timer.ElapsedMilliseconds/1000f);
+            PlayerData.gameScore = score;
 
-
-            //LOSE
+            SceneManager.LoadScene("WinLose");
         }
         isPressed = true;
     }

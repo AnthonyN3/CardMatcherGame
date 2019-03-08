@@ -9,5 +9,6 @@ public static class PlayerData
     public static int numOfCards = 6;
 
     public static float gameTime = 0f;
+    public static int gameScore = 0;
 
 }

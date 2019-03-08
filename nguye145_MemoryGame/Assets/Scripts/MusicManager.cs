@@ -21,7 +21,7 @@ public class MusicManager : MonoBehaviour
         musicSource.Play();
     }
 
-    public void CourseClearSound()
+    public void CourseCleared()
     {
         musicSource.clip = clips[2];
         musicSource.Play();
