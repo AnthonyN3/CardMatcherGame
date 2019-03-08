@@ -26,7 +26,8 @@ public class PopulateGrid : MonoBehaviour
     public TextMeshProUGUI scoreText;
     private int score;
 
-    public Stopwatch timer;
+    //public Stopwatch timer;
+    Stopwatch timer;
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +45,6 @@ public class PopulateGrid : MonoBehaviour
 
         timer = new Stopwatch();
         timer.Start();
-
     }
 
     public void populate()
@@ -136,6 +136,15 @@ public class PopulateGrid : MonoBehaviour
             cardTwo = -2;
             isPressed = false;
             
+            //When two cards are matched
+            //we remove them from the grid
+            //NOTE: we do not disable the entire obect because since these
+            //objects are put onto a grid, it shifts everything over when its SetActive(false)
+            CardOne.GetComponent<Image>().enabled = false;
+            CardTwo.GetComponent<Image>().enabled = false;
+            CardOne.transform.GetChild(0).gameObject.SetActive(false);
+            CardTwo.transform.GetChild(0).gameObject.SetActive(false);
+
             //Set the two GO reference of the 2 cards back to null
             CardOne = null;
             CardTwo = null;
@@ -143,31 +152,42 @@ public class PopulateGrid : MonoBehaviour
             cardsMatched++;
             if(cardsMatched == PlayerData.numOfCards)
             {
+                //Stop timer and store into a static variable from a static script/class
+                timer.Stop();
+                PlayerData.gameTime = (timer.ElapsedMilliseconds/1000f);
+
+                
                 //YOU WIN
             }
         }
-        else
-        {
+        else        //If mis matched cards...
+        {   
             CardOne.GetComponent<Button>().enabled = true;
             CardTwo.GetComponent<Button>().enabled = true;
             
-
             CardOne.transform.GetChild(0).gameObject.SetActive(false);
             CardTwo.transform.GetChild(0).gameObject.SetActive(false);
 
+            //Reset checking values
             cardOne = -1;
             cardTwo = -2;
             CardOne = null;
             CardTwo = null;
             isPressed = false;
 
-            score = score-40;
+            //Update the score on the screen
+            score = score-40;       //Deduct 40 points for mismatch
             scoreText.text = score.ToString();
 
         }
 
         if(score == 0)
-        {
+        {   
+            //Stop timer and store into a static variable from a static script/class
+            timer.Stop();
+            PlayerData.gameTime = (timer.ElapsedMilliseconds/1000f);
+
+
             //LOSE
         }
         isPressed = true;
