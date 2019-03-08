@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This class is a static class used to pass Data accross between scenes
 public static class PlayerData 
 {   
     //The number of unique cards is defaulted to 6

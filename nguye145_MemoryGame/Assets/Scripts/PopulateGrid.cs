@@ -12,13 +12,14 @@ public class PopulateGrid : MonoBehaviour
     public GameObject AudioManager;
 
     [SerializeField]
-    private Sprite[] Images;
+    private Sprite[] Images = new Sprite[10];
     //private int[] idNumbers = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9};
     private int[] idNumbers = new int[PlayerData.numOfCards*2];     
     private int pressed = 0;
     private int cardOne = -1, cardTwo = -2;
     private GameObject CardOne, CardTwo;
     public bool isPressed = true;
+    private int cardsMatched;
 
 
     //SCORE
@@ -30,6 +31,8 @@ public class PopulateGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cardsMatched = 0;
+
         //Finds the gameobbject named "Score"
         GameObject scoreGO = GameObject.Find("Score");
         scoreText = scoreGO.GetComponent<TextMeshProUGUI>();    //Assigns the scoteText to the reference of the component in Score GO
@@ -128,12 +131,20 @@ public class PopulateGrid : MonoBehaviour
     {
         if(cardOne == cardTwo)
         {
+            //Reseting the two cards id
             cardOne = -1;
             cardTwo = -2;
             isPressed = false;
+            
+            //Set the two GO reference of the 2 cards back to null
             CardOne = null;
             CardTwo = null;
 
+            cardsMatched++;
+            if(cardsMatched == PlayerData.numOfCards)
+            {
+                //YOU WIN
+            }
         }
         else
         {
@@ -155,6 +166,10 @@ public class PopulateGrid : MonoBehaviour
 
         }
 
+        if(score == 0)
+        {
+            //LOSE
+        }
         isPressed = true;
     }
 
