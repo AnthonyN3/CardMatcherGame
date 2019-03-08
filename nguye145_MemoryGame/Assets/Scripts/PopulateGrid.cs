@@ -1,33 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI;   //For Unity UI (Canvas, buttons, texts, etc)    
+using TMPro;            //For TextMeshPro 
+using System.Diagnostics;
+
 
 public class PopulateGrid : MonoBehaviour
 {
-    public GameObject cards;
+    public GameObject cardPrefab;
     public GameObject AudioManager;
 
     [SerializeField]
     private Sprite[] Images;
     //private int[] idNumbers = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9};
-    private int[] idNumbers = new int[PlayerData.numOfCards*2];
-    private bool[] idTaken = new bool[20];  //Used to check if id has been set (NOTE: default value is false..)
+    private int[] idNumbers = new int[PlayerData.numOfCards*2];     
     private int pressed = 0;
     private int cardOne = -1, cardTwo = -2;
     private GameObject CardOne, CardTwo;
     public bool isPressed = true;
 
+
+    //SCORE
+    public TextMeshProUGUI scoreText;
+    private int score;
+
+    public Stopwatch timer;
+
     // Start is called before the first frame update
     void Start()
     {
+        //Finds the gameobbject named "Score"
+        GameObject scoreGO = GameObject.Find("Score");
+        scoreText = scoreGO.GetComponent<TextMeshProUGUI>();    //Assigns the scoteText to the reference of the component in Score GO
+        score = 1000;
+        scoreText.text = score.ToString();  //Sets the text score to 1000 (Default)
+        
         isPressed = true;
-        populate();
-    }
+        populate(); //Populates the grid/screen with cards
 
-    // Update is called once per frame
-    void Update()
-    {
+        timer = new Stopwatch();
+        timer.Start();
+
     }
 
     public void populate()
@@ -48,11 +62,11 @@ public class PopulateGrid : MonoBehaviour
         //Shufle the idNumbers array
         idNumbers = ShuffleArray(idNumbers);
 
+        //Instantiating cards(buttons) onto the grid
         for(int i = 0; i < PlayerData.numOfCards*2 ; i++)
         {
-            newObj = (GameObject)Instantiate(cards, transform);
+            newObj = (GameObject)Instantiate(cardPrefab, transform);
             newObj.GetComponent<Card>().id = idNumbers[i];  
-
             newObj.transform.GetChild(0).GetComponent<Image>().sprite = Images[newObj.GetComponent<Card>().id];
         }
             
@@ -119,6 +133,7 @@ public class PopulateGrid : MonoBehaviour
             isPressed = false;
             CardOne = null;
             CardTwo = null;
+
         }
         else
         {
@@ -134,6 +149,10 @@ public class PopulateGrid : MonoBehaviour
             CardOne = null;
             CardTwo = null;
             isPressed = false;
+
+            score = score-40;
+            scoreText.text = score.ToString();
+
         }
 
         isPressed = true;
