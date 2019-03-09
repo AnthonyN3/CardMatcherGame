@@ -311,7 +311,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20e7eccd01e754d4080a373256f39df8, type: 3}
   - {fileID: 21300000, guid: 1db5670ed090ca344b56346cfa147758, type: 3}
   - {fileID: 21300000, guid: fe8fe13532633bf4ba85ab2dab664e3d, type: 3}
-  - {fileID: 21300000, guid: e25fbf4d9dd09074db2ced932a9f3bf4, type: 3}
+  - {fileID: 21300000, guid: 382131910ff1eef44a02756db32132c2, type: 3}
   - {fileID: 21300000, guid: 570a8df092d65644db54a180da6a0aea, type: 3}
   isPressed: 1
   scoreText: {fileID: 0}
