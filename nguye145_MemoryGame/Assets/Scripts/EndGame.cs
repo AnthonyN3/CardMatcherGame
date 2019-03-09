@@ -24,8 +24,6 @@ public class EndGame : MonoBehaviour
 
     void Start()
     {
-
-
         GameObject scoreGO = GameObject.Find("Score");
         scoreText = scoreGO.GetComponent<TextMeshProUGUI>();    //Assigns the scoteText to the reference of the component in Score GO
         scoreText.text = "SCORE: " + PlayerData.gameScore.ToString();
@@ -35,15 +33,17 @@ public class EndGame : MonoBehaviour
         timeText = scoreGO.GetComponent<TextMeshProUGUI>();
         timeText.text = "TIME: " + PlayerData.gameTime.ToString() + " SEC";
         
+        //Prompts corresponding message depending on if you have won or lost
         if(PlayerData.gameScore == 0)
             YouLose.SetActive(true);
         else
             YouWin.SetActive(true);
 
+        //Plays corresponding audio based off of winning or losing
         PlayAudio();
 
     }
-
+    
     private void PlayAudio()
     {
         if(PlayerData.gameScore == 0)

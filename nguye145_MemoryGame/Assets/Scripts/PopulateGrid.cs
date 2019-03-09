@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;   //For Unity UI (Canvas, buttons, texts, etc)    
 using TMPro;            //For TextMeshPro 
-using System.Diagnostics;
-using UnityEngine.SceneManagement;
+using System.Diagnostics;       //Used for timeing the game (stopwatch)
+using UnityEngine.SceneManagement;  //used to navigate to other scenes (End game scene)
 
 public class PopulateGrid : MonoBehaviour
 {
@@ -21,8 +21,8 @@ public class PopulateGrid : MonoBehaviour
     public bool isPressed = true;
     private int cardsMatched;
 
+    //Used for the grid layout
     private int rows;
-    private int cols = 3;
 
     //SCORE
     public TextMeshProUGUI scoreText;
@@ -30,7 +30,6 @@ public class PopulateGrid : MonoBehaviour
 
     //public Stopwatch timer;
     Stopwatch timer;
-
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +47,14 @@ public class PopulateGrid : MonoBehaviour
         scoreText = scoreGO.GetComponent<TextMeshProUGUI>();    //Assigns the scoteText to the reference of the component in Score GO
         score = 1000;
         scoreText.text = score.ToString();  //Sets the text score to 1000 (Default)
+
+        populate(); //Populates the grid/screen with cards
+
+    }
+
+    public void populate()
+    {
         
-       /*  cols=3;
         if(PlayerData.numOfCards == 6)
             rows = 4;
         else if(PlayerData.numOfCards == 7)
@@ -59,17 +64,12 @@ public class PopulateGrid : MonoBehaviour
         else
             rows = 7;
         
+        //Since grid layout group does not scale the cells of instantiated object..
+        //We created a formula/equation that will scale it accordingly to the grids length and width and the number of cards
         RectTransform parentRect = gameObject.GetComponent<RectTransform>();
         GridLayoutGroup grid = gameObject.GetComponent<GridLayoutGroup>();
-        grid.cellSize = new Vector2(parentRect.rect.width/cols, parentRect.rect.height/rows);*/
+        grid.cellSize = new Vector2(parentRect.rect.width/5, parentRect.rect.height/rows);
 
-
-        populate(); //Populates the grid/screen with cards
-
-    }
-
-    public void populate()
-    {
         GameObject newObj; 
 
         int y = 0;  //We pair every id.. Therefore we need another incrementor
@@ -89,9 +89,9 @@ public class PopulateGrid : MonoBehaviour
         //Instantiating cards(buttons) onto the grid
         for(int i = 0; i < PlayerData.numOfCards*2 ; i++)
         {
-            newObj = (GameObject)Instantiate(cardPrefab, transform);
-            newObj.GetComponent<Card>().id = idNumbers[i];  
-            newObj.transform.GetChild(0).GetComponent<Image>().sprite = Images[newObj.GetComponent<Card>().id];
+            newObj = (GameObject)Instantiate(cardPrefab, transform);    //create instance of a card
+            newObj.GetComponent<Card>().id = idNumbers[i];              //Assign that card a id
+            newObj.transform.GetChild(0).GetComponent<Image>().sprite = Images[newObj.GetComponent<Card>().id];     //Assign the card's image based off of its id
         }
             
     }
@@ -117,37 +117,42 @@ public class PopulateGrid : MonoBehaviour
     public void ClickCard(int clickCardsId, GameObject thisCard)
     {
         
-        pressed++;
+        pressed++;  //increment the pressed (used to calculate if there were 1 or 2 cards pressed)
 
         if(pressed == 1)
-        {
+        {   
+            //If prsesed == 1, that means only 1 card has be selected (and its waiting for its pair to be selected) 
             cardOne = clickCardsId;
             CardOne = thisCard;
 
-
-            return;
+            return; //exit out
         }
         else if (pressed == 2)
-        {
+        {   
             cardTwo = clickCardsId;
             CardTwo = thisCard;
         }
 
+        //Checks whether a card has been pressed (this is also used to deal with spamming cards)
         if(isPressed)
         {     
             pressed = 0; 
-            isPressed = false;    
+            isPressed = false;  //So user cannot spam cards  
             
+            //Checks which audio to play depending on if the cards id/image match
             if(cardOne == cardTwo)
                 AudioManager.GetComponent<MusicManager>().MatchSound();
             else
                 AudioManager.GetComponent<MusicManager>().NonMatchSound();
 
+            //Calls a match checker function in 1 second
             Invoke("DoTheyMatch", 1f);
         }
 
     }
 
+
+    //Checks if two cards match
     private void DoTheyMatch()
     {
         if(cardOne == cardTwo)
@@ -170,7 +175,7 @@ public class PopulateGrid : MonoBehaviour
             CardOne = null;
             CardTwo = null;
 
-            cardsMatched++;
+            cardsMatched++; //keeps track of # of total cards matched
 
             //Checks if you have won(matched all cards)
             if(cardsMatched == PlayerData.numOfCards)
@@ -180,14 +185,17 @@ public class PopulateGrid : MonoBehaviour
                 PlayerData.gameTime = (timer.ElapsedMilliseconds/1000f);
                 PlayerData.gameScore = score;
                 
+                //Load the end game scene
                 SceneManager.LoadScene("WinLose");
             }
         }
         else        //If mis matched cards...
         {   
+            //re-enables the cards to be clickable (since a fail matched occur)
             CardOne.GetComponent<Button>().enabled = true;
             CardTwo.GetComponent<Button>().enabled = true;
             
+            //Sets the front side of the card to unactive(hide the image)
             CardOne.transform.GetChild(0).gameObject.SetActive(false);
             CardTwo.transform.GetChild(0).gameObject.SetActive(false);
 
@@ -200,10 +208,11 @@ public class PopulateGrid : MonoBehaviour
 
             //Update the score on the screen
             score = score-40;       //Deduct 40 points for mismatch
-            scoreText.text = score.ToString();
+            scoreText.text = score.ToString();  //Show on current points onto screen
 
         }
 
+        //This is used to check if the player has lost all points and therefore lost the game
         if(score == 0)
         {   
             //Stop timer and store into a static variable from a static script/class
@@ -213,6 +222,8 @@ public class PopulateGrid : MonoBehaviour
 
             SceneManager.LoadScene("WinLose");
         }
+
+
         isPressed = true;
     }
 
