@@ -57,12 +57,10 @@ public class PopulateGrid : MonoBehaviour
         
         if(PlayerData.numOfCards == 6)
             rows = 4;
-        else if(PlayerData.numOfCards == 7)
+        else if(PlayerData.numOfCards == 7 || PlayerData.numOfCards == 8)
             rows = 5;
-        else if (PlayerData.numOfCards == 8 || PlayerData.numOfCards == 9)
+        else if (PlayerData.numOfCards == 9 || PlayerData.numOfCards == 10)
             rows = 6;
-        else
-            rows = 7;
         
         //Since grid layout group does not scale the cells of instantiated object..
         //We created a formula/equation that will scale it accordingly to the grids length and width and the number of cards
